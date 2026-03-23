@@ -30,3 +30,13 @@ def test_all_tenants_in_manager():
     
     for name in expected_tenant_names:
         assert name in manager_tenant_names
+        
+def test_tenants_have_valid_apartments():
+    parameters = Parameters()
+    manager = Manager(parameters)
+    
+    assert manager.validate_tenants_apartments() is True
+    
+    some_tenant_key = next(iter(manager.tenants.keys()))
+    manager.tenants[some_tenant_key].apartment = "non-existing-apartment"
+    assert manager.validate_tenants_apartments() is False

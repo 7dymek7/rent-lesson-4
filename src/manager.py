@@ -11,6 +11,13 @@ class Manager:
         self.bills = []
        
         self.load_data()
+    def validate_tenants_apartments(self) -> bool:
+        for tenant in self.tenants.values():
+            if not tenant.apartment:
+                return False
+            if tenant.apartment not in self.apartments:
+                return False
+        return True
 
     def load_data(self):
         self.apartments = Apartment.from_json_file(self.parameters.apartments_json_path)
